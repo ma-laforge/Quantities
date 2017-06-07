@@ -4,21 +4,21 @@
 
 #==Main data structures
 ===============================================================================#
-abstract Unit{Symbol} #Think this might be too much
+abstract type Unit{Symbol} end #Think this might be too much
 
-abstract QuantityType
+abstract type QuantityType end
 #==TODO: How to limit Units to supported units?
 It would be nice to flag an error when people write :M, instead of :m...
 ==#
-typealias Meter Unit{:m}
-typealias Kilogram Unit{:kg}
-typealias Inch Unit{:in}
-typealias Radians Unit{:rad}
-typealias Degrees Unit{:deg}
-typealias RadiansPerSecond Unit{:rad_s}
-typealias Hertz Unit{:Hz}
+const Meter = Unit{:m}
+const Kilogram = Unit{:kg}
+const Inch = Unit{:in}
+const Radians = Unit{:rad}
+const Degrees = Unit{:deg}
+const RadiansPerSecond = Unit{:rad_s}
+const Hertz = Unit{:Hz}
 
-immutable Quantity{T<:Number, QuantityType, Unit} #<: Number
+struct Quantity{T<:Number, QuantityType, Unit} #<: Number
 	v::T
 end
 value(q::Quantity) = q.v
@@ -32,9 +32,9 @@ If that happens, how would Julia deal with the recursive structure:
 
 #==Specific quantities
 ===============================================================================#
-abstract AbstractLengthType <: QuantityType
-abstract LengthType <: AbstractLengthType
-abstract DistType <: AbstractLengthType
+abstract type AbstractLengthType <: QuantityType end
+abstract type LengthType <: AbstractLengthType end
+abstract type DistType <: AbstractLengthType end
 #==AbstractLength: Meter is known as a "unit of length"... even though the
 actual thing measured might be a length, distance, position, ....
 So, "AbstractLength" refers to any quantity measured in "unit of length".
@@ -42,8 +42,8 @@ So, "AbstractLength" refers to any quantity measured in "unit of length".
 
 #==Useful aliases
 ===============================================================================#
-typealias _Length{T<:Number, U<:Unit} Quantity{T,LengthType,U}
-typealias _Dist{T<:Number, U<:Unit}   Quantity{T,DistType,U}
+const _Length{T<:Number, U<:Unit} = Quantity{T,LengthType,U}
+const _Dist{T<:Number, U<:Unit}   = Quantity{T,DistType,U}
 
 #==Problem:
  -"type Length" permits you to create constructor function "Length",

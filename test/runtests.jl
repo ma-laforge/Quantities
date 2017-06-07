@@ -6,8 +6,8 @@
 using Quantities
 Q=Quantities
 
-typealias AbstractLength{T<:Number, QT<:Q.AbstractLengthType, U<:Q.Unit} Q.Quantity{T,QT,U}
-typealias Length_m{T}                   Q.Quantity{T,Q.LengthType,Q.Meter}
+const AbstractLength{T<:Number, QT<:Q.AbstractLengthType, U<:Q.Unit} = Q.Quantity{T,QT,U}
+const Length_m{T} = Q.Quantity{T,Q.LengthType,Q.Meter}
 
 #Sample data:
 #-------------------------------------------------------------------------------
